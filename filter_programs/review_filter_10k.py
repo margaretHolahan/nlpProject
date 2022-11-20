@@ -1,3 +1,5 @@
+# Program to filter out first 10k reviews
+# Filter out first 2000 reviews for each star
 import json
 
 def add_to_files(file_path, array):
