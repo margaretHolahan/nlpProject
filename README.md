@@ -1,14 +1,22 @@
 ## STATS:
-6990280 Total Reviews from Yelp Dataset \
-3632012 Restaurant Reviews Found
+6,990,280 Total Reviews from Yelp Dataset \
+3,632,012 Restaurant Reviews Found
 
 ### FIRST 10K
 Found first 2000 reviews for each star for a total of 10k reviews
 
 ### TOP 3 REVIEW COUNT
-user_1_star_1 68 user_1_star_2 265 user_1_star_3 821 user_1_star_4 1443 user_1_star_5 451 \
-user_2_star_1 25 user_2_star_2 158 user_2_star_3 500 user_2_star_4 692 user_2_star_5 307 \
-user_3_star_1 5 user_3_star_2 17 user_3_star_3 318 user_3_star_4 817 user_3_star_5 290 
+**User 1** \
+Total: 3048 Reviews \
+1 Star: 68 | 2 Star: 265 | 3 Star: 821 | 4 Star: 1443 | 5 Star: 451 
+
+**User 2** \
+Total: 1682 Reviews \
+1 Star: 25 | 2 Star: 158 | 3 Star: 500 | 4 Star: 692 | 5 Star: 307 
+
+**User 3** \
+Total: 1447 Reviews \
+1 Star: 5 | 2 Star: 17 | 3 Star: 318 | 4 Star: 817 | 5 Star: 290 
 
 ## FILTER_PROGRAMS
 **business_filter.py** \
