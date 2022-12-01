@@ -95,13 +95,13 @@ def get_nb_baseline(stars, train_scores):
     # Get the values we will compare the test data with to categorize reviews 
     defaultprob = math.log(0.0000000000001)
     for star in all_probs:
-        print(len(stars[star]))
         train_scores[star] = all_probs[star].get(stars[star][0], defaultprob)
         for i in range(1, len(stars[star])):
             train_scores[star] += all_probs[star].get(stars[star][i], defaultprob)
-        train_scores[star] = train_scores[star]/len(stars[star])
-    print("train_scores", train_scores)
-    
+        print(train_scores[star])
+
+
+
     return train_scores
 
 def naive_bayes(reviewwords, all_probs, train_scores):
@@ -116,33 +116,14 @@ def naive_bayes(reviewwords, all_probs, train_scores):
     }
 
     for star in all_probs:
-        print(len(reviewwords))
+        # print(reviewwords[0])
         test_scores[star] = all_probs[star].get(reviewwords[0], defaultprob)
+        # print(all_probs[star].get(reviewwords[0]))
+        # print(test_scores[star])
         for i in range(1, len(reviewwords)):
             test_scores[star] += all_probs[star].get(reviewwords[i], defaultprob)
-        test_scores[star] = train_scores[star]/len(reviewwords)
-    print("test_scores", test_scores)
-        
-    # for score in scores:
-    #     print(score)    
-    #     print(scores[score])
-
-
-    
-    # ### POSITIVE SCORE
-    # posscore = poswordprobs.get(reviewwords[0], defaultprob)
-    # for i in range(1, len(reviewwords)):
-    #     posscore += poswordprobs.get(reviewwords[i], defaultprob)
-
-    # ### CALCULATE NEGATIVE SCORE
-    # negscore = negwordprobs.get(reviewwords[0], defaultprob)
-    # for i in range(1, len(reviewwords)):
-    #     negscore += negwordprobs.get(reviewwords[i], defaultprob)
-
-    # if (posscore - negscore) >  0:
-    #     return "pos"
-
-    # return "neg"
+        # test_scores[star] = train_scores[star]/len(reviewwords)
+    #!!! print("test_scores", test_scores)
 
 def calculate_accuracy(all_probs, train_scores):
     nbcorrect = 0
@@ -183,5 +164,5 @@ find_sentiment_range()
 all_probs = calculate_nb_probabilities()
 
 train_scores = get_nb_baseline(stars, train_scores)
-print(train_scores)
+# print(train_scores)
 calculate_accuracy(all_probs, train_scores)
