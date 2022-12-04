@@ -2,13 +2,16 @@
 # To categorize test reviews into 1-5 star reviews 
 # Based off nb.py file from Pset 1 
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay
 from nltk.corpus import stopwords
 from nltk import FreqDist
 from textblob import TextBlob
+import matplotlib.pyplot as plt
 import json
 import numpy as np
 import glob
 import math
+import random
 
 # Stopwords
 stops = stopwords.words('english')
@@ -198,15 +201,17 @@ def calculate_textblob(review):
 def calculate_accuracy(all_probs):
     true_results = {"nb": [], "smnb": [], "tb": []}
     pred_results = {"nb": [], "smnb": [], "tb": []}
-    nbcorrect = 0
-    smnbcorrect = 0
-    tbcorrect = 0
+    nbcorrect = {"1_star": 0, "2_star": 0, "3_star": 0, "4_star": 0, "5_star": 0}
+    smnbcorrect = {"1_star": 0, "2_star": 0, "3_star": 0, "4_star": 0, "5_star": 0}
+    tbcorrect = {"1_star": 0, "2_star": 0, "3_star": 0, "4_star": 0, "5_star": 0}
 
     star_list = ["1_star", "2_star", "3_star", "4_star", "5_star"]
     all_files = glob.glob("./json_data/tokenize/first_10k/test/*")
     for file in all_files:
         star_fd = open(file, 'r', encoding='utf-8')
         data = json.loads(star_fd.read())
+
+        random.shuffle(data)
 
         for review in data:
             testwords = []
@@ -226,7 +231,7 @@ def calculate_accuracy(all_probs):
             # NB Calculation
             nbstar = naive_bayes(testwords, all_probs)
             if real_star == nbstar:
-                nbcorrect += 1
+                nbcorrect[real_star] += 1
 
             true_results["nb"].append(real_star)
             pred_results["nb"].append(nbstar)
@@ -234,7 +239,7 @@ def calculate_accuracy(all_probs):
             # SMNB Calculation
             smnbstar = smooth_naive_bayes(testwords)
             if real_star == smnbstar:
-                smnbcorrect += 1
+                smnbcorrect[real_star] += 1
 
             true_results["smnb"].append(real_star)
             pred_results["smnb"].append(smnbstar)
@@ -243,7 +248,7 @@ def calculate_accuracy(all_probs):
             tbstar = calculate_textblob(testwords)
 
             if real_star == tbstar:
-                tbcorrect +=1 
+                tbcorrect[real_star] +=1 
 
             true_results["tb"].append(real_star)
             pred_results["tb"].append(tbstar)
@@ -260,26 +265,31 @@ def calculate_accuracy(all_probs):
     smnb_recall = np.mean(np.diag(smnb_cm) / np.sum(smnb_cm, axis = 1))
     smnb_precision = np.mean(np.diag(smnb_cm) / np.sum(smnb_cm, axis = 0))
 
+    ConfusionMatrixDisplay(confusion_matrix=smnb_cm, display_labels=["1_star", "2_star", "3_star", "4_star", "5_star"]).plot()
+    # plt.show()
     # TextBlob Confusion Matrix
     tb_cm = confusion_matrix(true_results["tb"], pred_results["tb"], labels=["1_star", "2_star", "3_star", "4_star", "5_star"])
     tb_recall = np.mean(np.diag(tb_cm) / np.sum(tb_cm, axis = 1))
     tb_precision = np.mean(np.diag(tb_cm) / np.sum(tb_cm, axis = 0))
 
     # NB Results
-    print("Naive Bayes Accuracy: ", (nbcorrect/1600))
+    for star in nbcorrect:
+        print("Naive Bayes Accuracy: ", star, (nbcorrect[star]/400))
     print("Naive Bayes Precision: ", nb_precision)
     print("Naive Bayes Recall: ", nb_recall)
     print("Naive Bayes f1: ", 2*((nb_precision * nb_recall)/(nb_precision + nb_recall)))
 
 
     # SMNB Results
-    print("Smoothing Naive Bayes Accuracy: ", (smnbcorrect/1600))
+    for star in nbcorrect:
+        print("Smoothing Naive Bayes Accuracy: ", star, (smnbcorrect[star]/400))
     print("Smoothing Naive Bayes Precision: ", smnb_precision)
     print("Smoothing Naive Bayes Recall: ", smnb_recall)
     print("Smoothing Naive Bayes f1: ", 2*((smnb_precision * smnb_recall)/(smnb_precision + smnb_recall)))
    
     # TextBlob Results
-    print("TextBlob Accuracy: ", (tbcorrect/1600))
+    for star in nbcorrect:
+        print("TextBlob Accuracy: ", star, (tbcorrect[star]/400))
     print("TextBlob Precision: ", tb_precision)
     print("TextBlob Recall: ", tb_recall)
     print("TextBlob f1: ", 2*((tb_precision * tb_recall)/(tb_precision + tb_recall)))
