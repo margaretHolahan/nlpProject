@@ -40,3 +40,5 @@ def knn():
     scores = cross_validate(gnb, X, Y, cv=10, scoring=scoring_metrics)
     for score_name, score_value in scores.items():
         print(score_name, score_value)
+
+knn()
