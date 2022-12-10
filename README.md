@@ -4,8 +4,8 @@ In this repository, we provide sentiment analysis on yelp restaurant reviews to 
 ## Dataset
 7M Total Reviews from Yelp Dataset \
 3.6M Restaurant Reviews Found\
-Total Word Count: 5.6 million \
-Total Sentence Count: 78k
+5.6M Total Word Count  \
+78k Total Sentence Count
 
 
 |   | stars  | text |
