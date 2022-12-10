@@ -18,13 +18,13 @@ In this repository, we provide sentiment analysis on yelp restaurant reviews to 
 
 ### F1 Results Not Shown on Poster
 
-| stars | Gaussian NB F1 | Logistic Regression F1 |
-| :------------ | :---------------:｜----------: |
-|  1 | 0.25 | 0.07 ｜
-|  2 | 0.14 | 0.20 ｜
-|  3 | 0.23 | 0.09 ｜
-|  4 | 0.14 | 0.31 ｜
-|  5 | 0.38 | 0.16 ｜
+| Stars | Gaussian NB F1 | Logistic Regression F1 |
+| :------------ |:---------------:| -----:|
+| 1 | 0.25 | 0.07 
+| 2 | 0.14 | 0.20
+| 3 | 0.23 | 0.09
+| 4 | 0.14 | 0.31
+| 5 | 0.38 | 0.16
 
 
 ## Classifiers
