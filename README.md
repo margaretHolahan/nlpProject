@@ -16,9 +16,9 @@ Total Sentence Count: 78k
 | 3 | 1|   I just got back from Chucks and had to login t... |
 | 4 | 5 |   There are few truly great lunch places in Old ... |
 
-###F1 Results Not Shown on Poster
+### F1 Results Not Shown on Poster
 **Gaussian NB**
-| : Star : | :F1: |
+| Star | F1 |
 | :------------ |:---------------:|
 |  1 | 0.25 |
 |  2 | 0.14 |
@@ -27,7 +27,7 @@ Total Sentence Count: 78k
 |  5 | 0.38 |
 
 **Logistic Regression**
-| : Star : | :F1: |
+| Star  | F1 |
 | :------------ |:---------------:|
 |  1 | 0.07 |
 |  2 | 0.20 |
