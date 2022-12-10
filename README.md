@@ -17,23 +17,11 @@ In this repository, we provide sentiment analysis on yelp restaurant reviews to 
 | 4 | 5 |   There are few truly great lunch places in Old ... |
 
 ### F1 Results Not Shown on Poster
-**Gaussian NB**
-| Star | F1 |
-| :------------ |:---------------:|
-|  1 | 0.25 |
-|  2 | 0.14 |
-|  3 | 0.23 |
-|  4 | 0.14 |
-|  5 | 0.38 |
 
-**Logistic Regression**
-| Star  | F1 |
-| :------------ |:---------------:|
-|  1 | 0.07 |
-|  2 | 0.20 |
-|  3 | 0.09 |
-|  4 | 0.31 |
-|  5 | 0.16 |
+| Star        | 1 | 2 | 3 | 4 | 5 |
+| :------------ : |:---------------:|:---------------:|:---------------:|:---------------:|:---------------:|
+| Gaussian NB  | 0.25 | 0.14 | 0.23 | 0.14 | 0.38 |
+| Logistic Regression | 0.07 | 0.20 | 0.09 | 0.31 | 0.16 |
 
 ## Classifiers
 All the classifier programs are contained in the folder 
