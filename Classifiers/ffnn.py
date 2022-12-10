@@ -16,7 +16,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from gensim.models import Word2Vec
 import numpy as np
 import pandas as pd
-from get_data.py import get_data, get_vectors, get_all_data
+import get_data
 
 df = pd.read_csv('/content/drive/MyDrive/nlpProject/all_reviews.csv')
 shuffled_df = df.sample(frac =1)
