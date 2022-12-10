@@ -1,34 +1,21 @@
-# Program to find sentence and word count
+# Program to find all sentence and word count in our corpus
 import nltk
 import json
-import re
 
-word_count = 0
 sent_count = 0
-file_names = ["./json_data/first_10k/train/first_10k_1_star.json",
-"./json_data/first_10k/train/first_10k_2_star.json",
-"./json_data/first_10k/train/first_10k_3_star.json",
-"./json_data/first_10k/train/first_10k_4_star.json",
-"./json_data/first_10k/train/first_10k_5_star.json",
-"./json_data/first_10k/test/first_10k_1_star_test.json",
-"./json_data/first_10k/test/first_10k_2_star_test.json",
-"./json_data/first_10k/test/first_10k_3_star_test.json",
-"./json_data/first_10k/test/first_10k_4_star_test.json",
-"./json_data/first_10k/test/first_10k_5_star_test.json",
-]
+word_count = 0
 
+fd = open("json_data/first_10k/all_reviews.json", "r", encoding='utf-8')
+data = json.loads(fd.read())
+for review in data:
+    all_sents = nltk.sent_tokenize(review["text"])
+    for sent in all_sents:
+        sent_count += 1
+        for word in sent:
+            word_count +=1
 
-for file in file_names:
-    with open(file, 'r', encoding='utf-8') as restaurant_fd:
-        data = json.loads(restaurant_fd.read())
-        for review in data:
-            review["text"] = re.sub("\n\n", " ", review["text"])
-            review["text"] = re.sub("\n", " ", review["text"])
-            sent = review["text"].split()
-            for word in sent:
-                word_count += 1
-            sent_count += 1
-    restaurant_fd.close()
+print("Sentence Count", sent_count)
+print("Word Count", word_count)
 
-print(word_count)
-print(sent_count)
+# Sentence Count 78588
+# Word Count 5568695
