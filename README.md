@@ -83,3 +83,7 @@ List of all reviews by this user sorted into five files by star
 
 **TOP_3_USER_3** \
 List of all reviews by this user sorted into five files by star 
+
+
+## Classifiers
+All the classifier programs are contained in the folder 
