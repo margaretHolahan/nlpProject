@@ -1,11 +1,10 @@
-# Program to create Naive Bayes, Smoothing Naive Bayes, and TextBlob classifiers
+# Program to create Naive Bayes and Smoothing Naive Bayes with Bag of Words Features
 # To categorize test reviews into 1-5 star reviews 
 # Based off nb.py file from Pset 1 
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
 from nltk.corpus import stopwords
 from nltk import FreqDist
-from textblob import TextBlob
 import matplotlib.pyplot as plt
 import json
 import numpy as np
@@ -19,9 +18,6 @@ punct = ["'", ".", ",", '"', ";", "?", "!", "-", "-", "(", ")", "*", "/", ":", "
 
 # Store all content words in each review
 stars = {"1_star": [], "2_star": [], "3_star": [], "4_star": [], "5_star": [],}
-
-# Store the values obtained from Textblob from training data
-sentiment_vals = {"1_star": None, "2_star": None, "3_star": None, "4_star": None, "5_star": None}
 
 def get_training_data():
     # Files storing preprocessed testing and training data for 1-5 star reviews
@@ -52,13 +48,6 @@ def get_training_data():
                 # If key found, break out of loop
                 continue
         stars[this_star] = allwords
-
-# Find what the sentiment range is for each star file and store 
-def find_sentiment_range():
-    for star in stars:
-        cur_review = TextBlob(' '.join(stars[star]))
-        cur_sentiment = cur_review.sentiment.polarity
-        sentiment_vals[star] = cur_sentiment
 
 def calculate_nb_probabilities():
     all_freqs = {
@@ -173,38 +162,12 @@ def smooth_naive_bayes(reviewwords):
             max_star = star
     return max_star
 
-def calculate_textblob(review):
-    cur_review = TextBlob(' '.join(review))
-    cur_sentiment = cur_review.sentiment.polarity
-
-    # The only category with a negative polarity is 1_star
-    if cur_sentiment < 0:
-        return "1_star"
-    
-    # Find which the sentiment of this review is most similar to
-    most_similar = None
-    min_diff = None
-    for star in sentiment_vals:
-        if star == "1_star":
-            continue
-        cur_diff = abs(sentiment_vals[star] - cur_sentiment)
-        if min_diff == None:
-            min_diff = cur_diff
-            most_similar = star
-            continue
-        if cur_diff < min_diff:
-            min_diff = cur_diff 
-            most_similar = star
-            
-    return most_similar
-
 def calculate_accuracy(all_probs):
-    true_results = {"nb": [], "smnb": [], "tb": []}
-    pred_results = {"nb": [], "smnb": [], "tb": []}
+    true_results = {"nb": [], "smnb": []}
+    pred_results = {"nb": [], "smnb": []}
     nbcorrect = {"1_star": 0, "2_star": 0, "3_star": 0, "4_star": 0, "5_star": 0}
     smnbcorrect = {"1_star": 0, "2_star": 0, "3_star": 0, "4_star": 0, "5_star": 0}
-    tbcorrect = {"1_star": 0, "2_star": 0, "3_star": 0, "4_star": 0, "5_star": 0}
-
+    
     star_list = ["1_star", "2_star", "3_star", "4_star", "5_star"]
     all_files = glob.glob("./json_data/tokenize/first_10k/test/*")
     for file in all_files:
@@ -236,7 +199,7 @@ def calculate_accuracy(all_probs):
             true_results["nb"].append(real_star)
             pred_results["nb"].append(nbstar)
 
-            # SMNB Calculation
+            # # SMNB Calculation
             smnbstar = smooth_naive_bayes(testwords)
             if real_star == smnbstar:
                 smnbcorrect[real_star] += 1
@@ -244,33 +207,17 @@ def calculate_accuracy(all_probs):
             true_results["smnb"].append(real_star)
             pred_results["smnb"].append(smnbstar)
 
-            # TextBlob Calculation            
-            tbstar = calculate_textblob(testwords)
-
-            if real_star == tbstar:
-                tbcorrect[real_star] +=1 
-
-            true_results["tb"].append(real_star)
-            pred_results["tb"].append(tbstar)
-
         star_fd.close()
 
     # NB Confusion Matrix
     nb_cm = confusion_matrix(true_results["nb"], pred_results["nb"], labels=["1_star", "2_star", "3_star", "4_star", "5_star"])
-    nb_precision = np.mean(np.diag(nb_cm) / np.sum(nb_cm, axis = 0))
-    nb_recall = np.mean(np.diag(nb_cm) / np.sum(nb_cm, axis = 1))
+    nb_precision = np.diag(nb_cm) / np.sum(nb_cm, axis = 0)
+    nb_recall = np.diag(nb_cm) / np.sum(nb_cm, axis = 1)
 
-    # SMNB Confusion Matrix
+    # # SMNB Confusion Matrix
     smnb_cm = confusion_matrix(true_results["smnb"], pred_results["smnb"], labels=["1_star", "2_star", "3_star", "4_star", "5_star"])
-    smnb_recall = np.mean(np.diag(smnb_cm) / np.sum(smnb_cm, axis = 1))
-    smnb_precision = np.mean(np.diag(smnb_cm) / np.sum(smnb_cm, axis = 0))
-
-    ConfusionMatrixDisplay(confusion_matrix=smnb_cm, display_labels=["1_star", "2_star", "3_star", "4_star", "5_star"]).plot()
-    # plt.show()
-    # TextBlob Confusion Matrix
-    tb_cm = confusion_matrix(true_results["tb"], pred_results["tb"], labels=["1_star", "2_star", "3_star", "4_star", "5_star"])
-    tb_recall = np.mean(np.diag(tb_cm) / np.sum(tb_cm, axis = 1))
-    tb_precision = np.mean(np.diag(tb_cm) / np.sum(tb_cm, axis = 0))
+    smnb_recall = np.diag(smnb_cm) / np.sum(smnb_cm, axis = 1)
+    smnb_precision = np.diag(smnb_cm) / np.sum(smnb_cm, axis = 0)
 
     # NB Results
     for star in nbcorrect:
@@ -279,7 +226,6 @@ def calculate_accuracy(all_probs):
     print("Naive Bayes Recall: ", nb_recall)
     print("Naive Bayes f1: ", 2*((nb_precision * nb_recall)/(nb_precision + nb_recall)))
 
-
     # SMNB Results
     for star in nbcorrect:
         print("Smoothing Naive Bayes Accuracy: ", star, (smnbcorrect[star]/400))
@@ -287,15 +233,7 @@ def calculate_accuracy(all_probs):
     print("Smoothing Naive Bayes Recall: ", smnb_recall)
     print("Smoothing Naive Bayes f1: ", 2*((smnb_precision * smnb_recall)/(smnb_precision + smnb_recall)))
    
-    # TextBlob Results
-    for star in nbcorrect:
-        print("TextBlob Accuracy: ", star, (tbcorrect[star]/400))
-    print("TextBlob Precision: ", tb_precision)
-    print("TextBlob Recall: ", tb_recall)
-    print("TextBlob f1: ", 2*((tb_precision * tb_recall)/(tb_precision + tb_recall)))
-
 # MAIN SECTION #
 get_training_data()
-find_sentiment_range()
 all_probs = calculate_nb_probabilities()
 calculate_accuracy(all_probs)
