@@ -19,3 +19,5 @@ def knn():
   print(metrics.classification_report(expected, predicted))
   print(metrics.confusion_matrix(expected, predicted))
 knn()
+def svc():
+  svc = 

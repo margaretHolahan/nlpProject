@@ -18,14 +18,11 @@ import numpy as np
 import pandas as pd
 from get_data.py import get_data, get_vectors, get_all_data
 
-print(get_vectors("train")[0])
+df = pd.read_csv('/content/drive/MyDrive/nlpProject/all_reviews.csv')
+shuffled_df = df.sample(frac =1)
+shuffled_df.to_csv("shuffled_data.csv", index=False)
+
 top_data_df = pd.read_csv("shuffled_data.csv")
-
-print("Columns in the original dataset:\n")
-print(top_data_df.columns)
-
-print("Number of rows per star rating:")
-print(top_data_df['stars'].value_counts())
 
 # Function to map stars to sentiment
 def map_sentiment(stars_received):
@@ -74,12 +71,6 @@ def split_train_test(top_data_df_small, test_size=0.3, shuffle_state=True):
                                                         shuffle=shuffle_state,
                                                         test_size=test_size, 
                                                         random_state=15)
-    print("Value counts for Train sentiments")
-    print(Y_train.value_counts())
-    print("Value counts for Test sentiments")
-    print(Y_test.value_counts())
-    print(type(X_train))
-    print(type(Y_train))
     X_train = X_train.reset_index()
     X_test = X_test.reset_index()
     Y_train = Y_train.to_frame()
