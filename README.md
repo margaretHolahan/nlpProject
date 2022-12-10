@@ -1,3 +1,6 @@
+## Restaurant Review Star Prediction for Yelp Dataset 
+In this repository, we provide sentiment analysis on yelp restaurant reviews to predict star ratings(1-5 stars). We investigate the data set provided by Yelp Dataset. Eight machine learning models are used: Naive Bayes, Smoothing Naive Bayes, Gaussian Naive Bayes, Logistic Regression, KNN, FFNN, LSTM, DistilBERT. After analyzing the performance of each model, the best model for predicting the ratings from reviews is DistilBERT.  
+
 ## STATS:
 6,990,280 Total Reviews from Yelp Dataset \
 3,632,012 Restaurant Reviews Found

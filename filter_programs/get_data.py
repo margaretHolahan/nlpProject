@@ -1,13 +1,16 @@
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-import pandas as pd 
-from sklearn import metrics
+
 from nltk.corpus import stopwords
 import glob
 import json
 import re
 from nltk.tokenize import sent_tokenize, word_tokenize
 from gensim.models import Word2Vec
+import numpy as np
+
+df = pd.read_csv('/content/drive/MyDrive/nlpProject/all_reviews.csv')
+shuffled_df = df.sample(frac =1)
+shuffled_df.to_csv("shuffled_data.csv", index=False)
+
 stops = stopwords.words('english')
 punct = ["'", ".", ",", '"', ";", "?", "!", "-", "-", "(", ")", "*", "/", ":", "~"]
 
@@ -32,6 +35,25 @@ def get_data(name, answer):
     return(toksents)
   else:
     return(stars)
+def get_all_data(answer):
+  alltext = "" 
+  toksents = []  
+  stars = []
+  f = open("../json_data/tokenize/first_10k/all_reviews.json")
+  data = json.loads(f.read().rstrip())
+  f.close()
+  allsent = []
+  for review in data:
+    sent = review["text"]
+    allsent = sent_tokenize(sent)
+    for w in allsent:
+      if(w not in stops):
+        toksents.append(nltk.word_tokenize(w))
+        stars.append(review['stars'])
+  if(answer == True):
+    return(toksents)
+  else:
+    return(stars)
 def get_vectors(name):
   vectors = []
   data = get_data(name, True)
@@ -43,15 +65,3 @@ def get_vectors(name):
         totvec = totvec + model[w.lower()]
     vectors.append(totvec)
   return vectors
-
-print(get_vectors("train")[0])
-
-def knn():
-  knn = KNeighborsClassifier()
-  #call it something other than model
-  knn.fit(get_vectors("train"), get_data("train", False))
-  expected = get_data("test", False)
-  predicted = knn.predict(get_vectors("test"))
-  print(metrics.classification_report(expected, predicted))
-  print(metrics.confusion_matrix(expected, predicted))
-knn()
