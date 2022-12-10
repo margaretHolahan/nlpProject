@@ -28,7 +28,13 @@ In this repository, we provide sentiment analysis on yelp restaurant reviews to 
 
 
 ## Classifiers
-All the classifier programs are contained in the folder 
+All the classifier programs are contained in the folder
+
+**Classifiers using Bag of Words Features:**\
+Naive Bayes, Smoothing Naive Bayes, LSTM
+
+**Classifiers using Word Embeddings:**\
+Gaussian Naive Bayes, Logistic Regression, KNN, FFNN
 
 ## Filter Programs
 Contains all python scripts we used to filter the Yelp Open Dataset (https://www.yelp.com/dataset)
