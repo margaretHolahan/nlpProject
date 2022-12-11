@@ -91,9 +91,9 @@ def main():
     filter_review_by_user(restaurant_reviews, top_users)
 
     # Get count of each review
-    # user_1_star_1 68 user_1_star_2 265 user_1_star_3 821 user_1_star_4 1443 user_1_star_5 451
-    # user_2_star_1 25 user_2_star_2 158 user_2_star_3 500 user_2_star_4 692 user_2_star_5 307
-    # user_3_star_1 5 user_3_star_2 17 user_3_star_3 318 user_3_star_4 817 user_3_star_5 290
+    # user_1_star_1 18 user_1_star_2 88 user_1_star_3 365 user_1_star_4 652 user_1_star_5 155
+    # user_2_star_1 13 user_2_star_2 115 user_2_star_3 334 user_2_star_4 469 user_2_star_5 176
+    # user_3_star_1 2 user_3_star_2 9 user_3_star_3 194 user_3_star_4 488 user_3_star_5 174
     print("user_1_star_1", len(user_1_reviews["1 star"]), "user_1_star_2", len(user_1_reviews["2 star"]), "user_1_star_3", len(user_1_reviews["3 star"]), "user_1_star_4", len(user_1_reviews["4 star"]), "user_1_star_5", len(user_1_reviews["5 star"]))
     print("user_2_star_1", len(user_2_reviews["1 star"]), "user_2_star_2", len(user_2_reviews["2 star"]), "user_2_star_3", len(user_2_reviews["3 star"]), "user_2_star_4", len(user_2_reviews["4 star"]), "user_2_star_5", len(user_2_reviews["5 star"]))
     print("user_3_star_1", len(user_3_reviews["1 star"]), "user_3_star_2", len(user_3_reviews["2 star"]), "user_3_star_3", len(user_3_reviews["3 star"]), "user_3_star_4", len(user_3_reviews["4 star"]), "user_3_star_5", len(user_3_reviews["5 star"]))
