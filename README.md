@@ -1,9 +1,16 @@
 ## Restaurant Review Star Prediction for Yelp Dataset 
-In this repository, we provide sentiment analysis on yelp restaurant reviews to predict star ratings(1-5 stars). We investigate the data set provided by Yelp Dataset. Eight machine learning models are used. Statistical classifiers: Naive Bayes, Smoothing Naive Bayes, Gaussian Naive Bayes, Logistic Regression, KNN. Neural network models: FFNN, LSTM. Transformer: DistilBERT. After analyzing the performance of each model, the best model for predicting the ratings from reviews is DistilBERT.  
+In this repository, we provide sentiment analysis on yelp restaurant reviews to predict star ratings(1-5 stars). We investigate the data set provided by Yelp Dataset. Eight machine learning models are used. 
+
+Statistical classifiers: Naive Bayes, Smoothing Naive Bayes, Gaussian Naive Bayes, Logistic Regression, KNN.\
+Neural network models: FFNN, LSTM.\
+Transformer: DistilBERT. 
+
+After analyzing the performance of each model, the best model for predicting the ratings from reviews is DistilBERT.  
 
 ## Dataset
 7M Total Reviews from Yelp Dataset \
 3.6M Restaurant Reviews Found\
+10k Reviews Used (2k for each star)\
 5.6M Total Word Count  \
 78k Total Sentence Count
 
@@ -26,18 +33,23 @@ In this repository, we provide sentiment analysis on yelp restaurant reviews to 
 | 4 | 0.14 | 0.31
 | 5 | 0.38 | 0.16
 
-
-## Classifiers
-All the classifier programs are contained in the folder
-
 **Classifiers using Bag of Words Features:**\
 Naive Bayes, Smoothing Naive Bayes, LSTM
 
 **Classifiers using Word Embeddings:**\
 Gaussian Naive Bayes, Logistic Regression, KNN, FFNN
 
+
+## Process
+1. Filter 10k reviews from the Yelp Open Dataset (https://www.yelp.com/dataset) with all python scripts in Filter Programs folder
+2. Store filtered reviews in the JSON Data folder
+3. Run classifiers the classifiers folder using reviews in JSON Data folder
+
+## Classifiers
+All the classifier programs are contained in this folder
+
 ## Filter Programs
-Contains all python scripts we used to filter the Yelp Open Dataset (https://www.yelp.com/dataset)
+Contains all python scripts we used to filter the reviews from the Yelp Open Dataset 
 Also includes python scripts used to preprocess our data 
 
 ## JSON Data
