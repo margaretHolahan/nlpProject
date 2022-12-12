@@ -34,10 +34,10 @@ After analyzing the performance of each model, the best model for predicting the
 | 5 | 0.38 | 0.16
 
 **Classifiers using Bag of Words Features:**\
-Naive Bayes, Smoothing Naive Bayes, LSTM
+Naive Bayes, Smoothing Naive Bayes, LSTM, FFNN
 
 **Classifiers using Word Embeddings:**\
-Gaussian Naive Bayes, Logistic Regression, KNN, FFNN
+Gaussian Naive Bayes, Logistic Regression, KNN
 
 
 ## Process
